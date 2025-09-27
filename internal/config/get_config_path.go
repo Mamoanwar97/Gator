@@ -12,5 +12,5 @@ func GetConfigPath() string {
 	if err != nil {
 		return ""
 	}
-	return filepath.Join(homeDir, configFileName)
+	return filepath.Join(homeDir, "bootDev", configFileName)
 }
