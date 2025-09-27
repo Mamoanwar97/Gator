@@ -37,10 +37,13 @@ Gator requires a configuration file to connect to your PostgreSQL database. Crea
 CREATE DATABASE gator_db;
 ```
 
-2. Run database migrations (if you have sqlc migrations set up):
+2. Run database migrations using goose:
 ```bash
-# Run your database migrations here
-# This will create the necessary tables: users, feeds, posts, feed_follows
+# Install goose if you haven't already
+go install github.com/pressly/goose/v3/cmd/goose@latest
+
+# Run migrations to create the necessary tables: users, feeds, posts, feed_follows
+goose -dir sql/schema postgres "your_connection_string" up
 ```
 
 ## Usage
@@ -104,11 +107,17 @@ gator/
 ## Development
 
 This project uses:
-- **sqlc** for type-safe database queries
+- **goose** for database migrations
+- **sqlc** for type-safe database query generation
 - **PostgreSQL** as the database
 - **Go modules** for dependency management
 
-To regenerate database code after schema changes:
+To run migrations after schema changes:
+```bash
+goose -dir sql/schema postgres "your_connection_string" up
+```
+
+To regenerate database code after query changes:
 ```bash
 sqlc generate
 ```
